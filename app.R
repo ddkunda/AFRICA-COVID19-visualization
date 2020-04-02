@@ -44,6 +44,7 @@ names(CASES)[2] <- "Country"
 CASES$Country <- as.character(CASES$Country)
 CASES$Country[CASES$Country %in% "Congo (Brazzaville)"] <- "Republic of the Congo"
 CASES$Country[CASES$Country %in% "Congo (Kinshasa)"] <- "Democratic Republic of the Congo"
+CASES$Country[CASES$Country %in% "Cote d'Ivoire"] <- "Côte d'Ivoire"
 
 
 DEATHS <-read.csv(file=("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"), header=T)
@@ -51,6 +52,7 @@ names(DEATHS)[2] <- "Country"
 DEATHS$Country <- as.character(DEATHS$Country)
 DEATHS$Country[DEATHS$Country %in% "Congo (Brazzaville)"] <- "Republic of the Congo"
 DEATHS$Country[DEATHS$Country %in% "Congo (Kinshasa)"] <- "Democratic Republic of the Congo"
+DEATHS$Country[DEATHS$Country %in% "Cote d'Ivoire"] <- "Côte d'Ivoire"
 
 ######################################################################################################################################################################################                
 ######################################################################################################################################################################################                
@@ -69,14 +71,14 @@ worldcountry <- read.csv(file=("https://raw.githubusercontent.com/eparker12/nCoV
 ## import translation bin
 load("../AFRICA_COVID19_visualization/translation and dictionary/translation.bin") 
 
-
+translationContent <- read.csv("../AFRICA_COVID19_visualization/translation and dictionary/dictionary.csv", header = TRUE)
 
 ############################
 ## LIST of AFRICAN COUNTRIES
 ############################
 COUNTRY <-as.data.frame(cbind(seq(1:54) ,c("Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cabo Verde", "Central African Republic", "Chad", "Camoros",
                                            "Democratic Republic of the Congo", "Republic of the Congo", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Ethiopia", "Gabon", "Gambia", 
-                                           "Ghana", "Guinea", "Guinea-Bissau", "Cote d'Ivoire", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", 
+                                           "Ghana", "Guinea", "Guinea-Bissau", "Côte d'Ivoire", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", 
                                            "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", 'Rwanda', "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone", 
                                            "Somalia", "South Africa", "South Sudan", "Sudan", "Swaziland", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe")))
 
@@ -98,12 +100,32 @@ DEATHS3 <- DEATHS2[, c(2:4, ncol(DEATHS2))]
 CASES_DEATHS <- merge(CASES3, DEATHS3, by = c("Country", "Lat", "Long"))
 names(CASES_DEATHS) <- c("Country", "Lat", "Long", "Cases", "Deaths")
 
-##
-CASES_DEATHS$Pays <- CASES_DEATHS$Country
+
+## save
+write.csv(CASES_DEATHS, "../AFRICA_COVID19_visualization/clean_data/CASES_DEATHS_v1.csv", row.names = FALSE)
+
+
+## load again
+#CASES_DEATHS <- read.csv("../AFRICA_COVID19_visualization/clean_data/CASES_DEATHS_v2.csv", header = TRUE)
+
+
+## merge with Countries french names
+CASES_DEATHS <- merge(CASES_DEATHS, translationContent, by.x = "Country", by.y = "key", all.x = TRUE)
+
+
+## create french translation of variables
+CASES_DEATHS$fr <- as.character( CASES_DEATHS$fr)
+CASES_DEATHS$Pays <- CASES_DEATHS$fr
 CASES_DEATHS$Cas <- CASES_DEATHS$Cases
 CASES_DEATHS$Décès <- CASES_DEATHS$Deaths
+CASES_DEATHS$Pays[CASES_DEATHS$Country %in% "Cabo Verde"] <- "Cap-Vert"
+CASES_DEATHS$Pays[CASES_DEATHS$Country %in% "Republic of the Congo"] <- "Congo"
+CASES_DEATHS$Pays[CASES_DEATHS$Country %in% "Tanzania"] <- "République-Unie de Tanzanie"
 
 
+
+######################################################################################################################################################################################                
+######################################################################################################################################################################################                
 
 
 ### DATA PROCESSING: COVID-19 ###
@@ -301,7 +323,7 @@ ui2 <-
                                       
                         hr(),
                        
-                         a(strong("Code"), href="https://github.com/ddkunda/WHO-data-visualization"),
+                         a(strong("Code"), href="https://github.com/ddkunda/AFRICA-COVID19-visualization"),
                         
                         br(),
                         hr(),
@@ -361,26 +383,32 @@ server2 <- function(input, output){
   
 
   reactive_df = reactive({
-    cv_cases_continent[cv_cases_continent$continent_level %in% "Africa", ]
+    CASES_DEATHS
   })
   
   
   output$reactive_case_count <- renderText({
-    paste0(prettyNum(sum(reactive_df()$new_cases), big.mark=","), tr1(" total cases"))
+    paste0(prettyNum(sum(reactive_df()$Cases), big.mark=","), tr1(" total cases"))
   })
   
   output$reactive_death_count <- renderText({
-    paste0(prettyNum(sum(reactive_df()$new_deaths), big.mark=","), tr1(" total deaths"))
+    paste0(prettyNum(sum(reactive_df()$Deaths), big.mark=","), tr1(" total deaths"))
   })
   
   
   output$Africa <- renderDataTable({
     
-    df <- as.data.frame(CASES_DEATHS[order(CASES_DEATHS$Cases, decreasing = TRUE), ])
+    #df <- as.data.frame(CASES_DEATHS)
+    #df <- as.data.frame(CASES_DEATHS[order(CASES_DEATHS$Cases, decreasing = TRUE), ])
+    df <- as.data.frame(CASES_DEATHS[order(CASES_DEATHS$Country), ])
     
     rownames(df) <- c()
     
-    df[, c(tr1("Country"), tr1("Cases"), tr1("Deaths"))]
+    df <- df[, c(tr1("Country"), tr1("Cases"), tr1("Deaths"))]
+    df <- df[order(df[,1]), ]
+    
+    df
+    
     })
   
   
@@ -497,7 +525,7 @@ output$consecutive <- renderPlot({
   
   # UI for TAB8
   output$uicmt81 <- renderUI({
-    helpText(h4(em(tr2("This Shiny App provides a quick way to search COVID-19 data in AFRICA, including the number of cases and deaths at the country level."))))
+    helpText(h4(em(tr2("This Shiny App provides a quick look at the AFRICA COVID-19 data, including total and country-level number of cases and deaths."))))
   })
   
   output$uicmt82 <- renderUI({

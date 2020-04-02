@@ -31,7 +31,7 @@ Cambodia,Cambodia,Cambodge,Camboya
 Cameroon,Cameroon,Cameroun,Camerún
 Canada,Canada,Canada,Canadá
 Cape Verde,Cape Verde,Cap Vert,Cabo Verde
-Central African Republic,Central African Republic,République centrafricaine,República Centroafricana
+Central African Republic,Central African Republic,République Centrafricaine,República Centroafricana
 Chad,Chad,Tchad,Chad
 Chile,Chile,Chili,Chile
 China,China,Chine,China
@@ -43,15 +43,15 @@ Croatia,Croatia,Croatie,Croacia
 Cuba,Cuba,Cuba,Cuba
 Cyprus,Cyprus,Chypre,Chipre
 Czechia,Czechia,Tchéquie,República Checa
-Democratic People's Republic of Korea,Democratic People's Republic of Korea,République populaire démocratique de Corée,República Popular Democrática de Corea
-Democratic Republic of the Congo,Democratic Republic of the Congo,République démocratique du Congo,República Democrática del Congo
+Democratic People's Republic of Korea,Democratic People's Republic of Korea,République Populaire Démocratique de Corée,República Popular Democrática de Corea
+Democratic Republic of the Congo,Democratic Republic of the Congo,République Démocratique du Congo,República Democrática del Congo
 Denmark,Denmark,Danemark,Dinamarca
 Djibouti,Djibouti,Djibouti,Djibouti
 Dominican Republic,Dominican Republic,République dominicaine,República Dominicana
 Ecuador,Ecuador,Équateur,Ecuador
 Egypt,Egypt,Egypte,Egipto
 El Salvador,El Salvador,El Salvador,El Salvador
-Equatorial Guinea,Equatorial Guinea,Guinée équatoriale,Guinea Ecuatorial
+Equatorial Guinea,Equatorial Guinea,Guinée Équatoriale,Guinea Ecuatorial
 Eritrea,Eritrea,Érythrée,Eritrea
 Estonia,Estonia,Estonie,Estonia
 Ethiopia,Ethiopia,Éthiopie,Etiopía
@@ -80,7 +80,7 @@ Iraq,Iraq,Irak,Iraq
 Ireland,Ireland,Irlande,Irlanda
 Israel,Israel,Israël,Israel
 Italy,Italy,Italie,Italia
-Ivory Coast,Ivory Coast,Côte d'Ivoire,Costa de Marfil
+Côte d'Ivoire,Côte d'Ivoire,Côte d'Ivoire,Costa de Marfil
 Jamaica,Jamaica,Jamaïque,Jamaica
 Japan,Japan,Japon,Japón
 Jordan,Jordan,Jordanie,Jordania
@@ -312,4 +312,4 @@ Choose a language:,Choose a language:,Choisissez une langue:,
  total deaths, total deaths, morts au total,
 Code adapted from the following sources:,Code adapted from the following sources:,Code adapté des sources suivantes:,
 Adapted from timeline data published by: ,Adapted from timeline data published by: ,Adapté des données de chronologie publiées par:,
-"This Shiny App provides a quick way to search COVID-19 data in AFRICA, including the number of cases and deaths at the country level.","This Shiny App provides a quick way to search COVID-19 data in AFRICA, including the number of cases and deaths at the country level.","Cette application Shiny App fournit un moyen rapide de rechercher des données COVID-19 en AFRIQUE, y compris le nombre de cas et de décès au niveau de chaque pays.",
+"This Shiny App provides a quick look at the AFRICA COVID-19 data, including total and country-level number of cases and deaths.","This Shiny App provides a quick look at the AFRICA COVID-19 data, including total and country-level number of cases and deaths.","Cette application fournit un aperçu rapide des données du COVID-19 en AFRIQUE, y compris le nombre de cas et de décès sur le continent et dans chaque pays.",
