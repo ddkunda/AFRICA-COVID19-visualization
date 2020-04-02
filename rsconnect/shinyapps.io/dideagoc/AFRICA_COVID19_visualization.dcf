@@ -1,0 +1,12 @@
+name: AFRICA_COVID19_visualization
+title: AFRICA_COVID19_visualization
+username:
+account: dideagoc
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 2034217
+bundleId: 2957249
+url: https://dideagoc.shinyapps.io/AFRICA_COVID19_visualization/
+when: 1585802383.51825
+asMultiple: FALSE
+asStatic: FALSE
