@@ -45,6 +45,7 @@ CASES$Country <- as.character(CASES$Country)
 CASES$Country[CASES$Country %in% "Congo (Brazzaville)"] <- "Republic of the Congo"
 CASES$Country[CASES$Country %in% "Congo (Kinshasa)"] <- "Democratic Republic of the Congo"
 CASES$Country[CASES$Country %in% "Cote d'Ivoire"] <- "Côte d'Ivoire"
+CASES$Country[CASES$Country %in% "Cabo Verde"] <- "Cape Verde"
 
 
 DEATHS <-read.csv(file=("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_deaths_global.csv"), header=T)
@@ -53,6 +54,19 @@ DEATHS$Country <- as.character(DEATHS$Country)
 DEATHS$Country[DEATHS$Country %in% "Congo (Brazzaville)"] <- "Republic of the Congo"
 DEATHS$Country[DEATHS$Country %in% "Congo (Kinshasa)"] <- "Democratic Republic of the Congo"
 DEATHS$Country[DEATHS$Country %in% "Cote d'Ivoire"] <- "Côte d'Ivoire"
+DEATHS$Country[DEATHS$Country %in% "Cabo Verde"] <- "Cape Verde"
+
+
+
+RECOVERED <-read.csv(file=("https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_covid19_recovered_global.csv"), header=T)
+names(RECOVERED)[2] <- "Country"
+RECOVERED$Country <- as.character(RECOVERED$Country)
+RECOVERED$Country[RECOVERED$Country %in% "Congo (Brazzaville)"] <- "Republic of the Congo"
+RECOVERED$Country[RECOVERED$Country %in% "Congo (Kinshasa)"] <- "Democratic Republic of the Congo"
+RECOVERED$Country[RECOVERED$Country %in% "Cote d'Ivoire"] <- "Côte d'Ivoire"
+RECOVERED$Country[RECOVERED$Country %in% "Cabo Verde"] <- "Cape Verde"
+
+
 
 ######################################################################################################################################################################################                
 ######################################################################################################################################################################################                
@@ -76,11 +90,11 @@ translationContent <- read.csv("../AFRICA_COVID19_visualization/translation and 
 ############################
 ## LIST of AFRICAN COUNTRIES
 ############################
-COUNTRY <-as.data.frame(cbind(seq(1:54) ,c("Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cabo Verde", "Central African Republic", "Chad", "Camoros",
+COUNTRY <-as.data.frame(cbind(seq(1:54) ,c("Algeria", "Angola", "Benin", "Botswana", "Burkina Faso", "Burundi", "Cameroon", "Cape Verde", "Central African Republic", "Chad", "Camoros",
                                            "Democratic Republic of the Congo", "Republic of the Congo", "Djibouti", "Egypt", "Equatorial Guinea", "Eritrea", "Ethiopia", "Gabon", "Gambia", 
                                            "Ghana", "Guinea", "Guinea-Bissau", "Côte d'Ivoire", "Kenya", "Lesotho", "Liberia", "Libya", "Madagascar", "Malawi", "Mali", "Mauritania", 
                                            "Mauritius", "Morocco", "Mozambique", "Namibia", "Niger", "Nigeria", 'Rwanda', "Sao Tome and Principe", "Senegal", "Seychelles", "Sierra Leone", 
-                                           "Somalia", "South Africa", "South Sudan", "Sudan", "Swaziland", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe")))
+                                           "Somalia", "South Africa", "South Sudan", "Sudan", "Eswatini", "Tanzania", "Togo", "Tunisia", "Uganda", "Zambia", "Zimbabwe")))
 
 names(COUNTRY)  <- c("rank", "Country")
 
@@ -92,36 +106,69 @@ CASES2 <- CASES2[, -ncol(CASES2)]
 DEATHS2 <- inner_join(DEATHS, COUNTRY)
 DEATHS2 <- DEATHS2[, -ncol(DEATHS2)]
 
+RECOVERED2 <- inner_join(RECOVERED, COUNTRY)
+RECOVERED2 <- RECOVERED2[, -ncol(RECOVERED2)]
 
 ## Define otal cases and deaths for each country
 CASES3 <- CASES2[, c(2:4, ncol(CASES2))]
 DEATHS3 <- DEATHS2[, c(2:4, ncol(DEATHS2))]
+RECOVERED3 <- RECOVERED2[, c(2:4, ncol(RECOVERED2))]
 
+
+######################################################################################################################################################################################                
+######################################################################################################################################################################################                
+
+## merge
 CASES_DEATHS <- merge(CASES3, DEATHS3, by = c("Country", "Lat", "Long"))
-names(CASES_DEATHS) <- c("Country", "Lat", "Long", "Cases", "Deaths")
+CASES_DEATHS$Long[CASES_DEATHS$Country %in% "Mozambique"] <- 35.5296
+CASES_DEATHS$Lat[CASES_DEATHS$Country %in% "Mozambique"] <- -18.6657
+CASES_DEATHS_RECOVERED <- merge(CASES_DEATHS, RECOVERED3, by = c("Country", "Lat", "Long"))
+names(CASES_DEATHS_RECOVERED) <- c("Country", "Lat", "Long", "Cases", "Deaths", "Recovered")
 
 
 ## save
-write.csv(CASES_DEATHS, "../AFRICA_COVID19_visualization/clean_data/CASES_DEATHS_v1.csv", row.names = FALSE)
+write.csv(CASES_DEATHS_RECOVERED, "../AFRICA_COVID19_visualization/clean_data/CASES_DEATHS_v1.csv", row.names = FALSE)
 
 
-## load again
-#CASES_DEATHS <- read.csv("../AFRICA_COVID19_visualization/clean_data/CASES_DEATHS_v2.csv", header = TRUE)
+## load AfricaCDC data
+CASES_DEATHS_RECOVERED2 <- read.csv("../AFRICA_COVID19_visualization/clean_data/CASES_DEATHS_v2.csv", header = TRUE)
 
+
+######################################################################################################################################################################################                
+######################################################################################################################################################################################                
+
+if(sum(CASES_DEATHS_RECOVERED$Cases) > sum(CASES_DEATHS_RECOVERED2$Cases)){
 
 ## merge with Countries french names
-CASES_DEATHS <- merge(CASES_DEATHS, translationContent, by.x = "Country", by.y = "key", all.x = TRUE)
-
+CASES_DEATHS_RECOVERED3 <- merge(CASES_DEATHS_RECOVERED, translationContent, by.x = "Country", by.y = "key", all.x = TRUE)
 
 ## create french translation of variables
-CASES_DEATHS$fr <- as.character( CASES_DEATHS$fr)
-CASES_DEATHS$Pays <- CASES_DEATHS$fr
-CASES_DEATHS$Cas <- CASES_DEATHS$Cases
-CASES_DEATHS$Décès <- CASES_DEATHS$Deaths
-CASES_DEATHS$Pays[CASES_DEATHS$Country %in% "Cabo Verde"] <- "Cap-Vert"
-CASES_DEATHS$Pays[CASES_DEATHS$Country %in% "Republic of the Congo"] <- "Congo"
-CASES_DEATHS$Pays[CASES_DEATHS$Country %in% "Tanzania"] <- "République-Unie de Tanzanie"
+CASES_DEATHS_RECOVERED3$fr <- as.character( CASES_DEATHS_RECOVERED3$fr)
+CASES_DEATHS_RECOVERED3$Pays <- CASES_DEATHS_RECOVERED3$fr
+CASES_DEATHS_RECOVERED3$Cas <- CASES_DEATHS_RECOVERED3$Cases
+CASES_DEATHS_RECOVERED3$Décès <- CASES_DEATHS_RECOVERED3$Deaths
+CASES_DEATHS_RECOVERED3$Rétablis <- CASES_DEATHS_RECOVERED3$Recovered
 
+CASES_DEATHS_RECOVERED3$Pays[CASES_DEATHS_RECOVERED3$Country %in% "Cabo Verde"] <- "Cap-Vert"
+CASES_DEATHS_RECOVERED3$Pays[CASES_DEATHS_RECOVERED3$Country %in% "Republic of the Congo"] <- "Congo"
+CASES_DEATHS_RECOVERED3$Pays[CASES_DEATHS_RECOVERED3$Country %in% "Tanzania"] <- "République-Unie de Tanzanie"
+  
+}else if(sum(CASES_DEATHS_RECOVERED$Cases) < sum(CASES_DEATHS_RECOVERED2$Cases)){
+  
+  ## merge with Countries french names
+  CASES_DEATHS_RECOVERED3 <- merge(CASES_DEATHS_RECOVERED2, translationContent, by.x = "Country", by.y = "key", all.x = TRUE)
+  
+  ## create french translation of variables
+  CASES_DEATHS_RECOVERED3$fr <- as.character( CASES_DEATHS_RECOVERED3$fr)
+  CASES_DEATHS_RECOVERED3$Pays <- CASES_DEATHS_RECOVERED3$fr
+  CASES_DEATHS_RECOVERED3$Cas <- CASES_DEATHS_RECOVERED3$Cases
+  CASES_DEATHS_RECOVERED3$Décès <- CASES_DEATHS_RECOVERED3$Deaths
+  CASES_DEATHS_RECOVERED3$Rétablis <- CASES_DEATHS_RECOVERED3$Recovered
+  
+  CASES_DEATHS_RECOVERED3$Pays[CASES_DEATHS_RECOVERED3$Country %in% "Cabo Verde"] <- "Cap-Vert"
+  CASES_DEATHS_RECOVERED3$Pays[CASES_DEATHS_RECOVERED3$Country %in% "Republic of the Congo"] <- "Congo"
+  CASES_DEATHS_RECOVERED3$Pays[CASES_DEATHS_RECOVERED3$Country %in% "Tanzania"] <- "République-Unie de Tanzanie"
+  }
 
 
 ######################################################################################################################################################################################                
@@ -200,8 +247,6 @@ for (i in 1:length(unique(cv_cases_continent$continent))) {
 write.csv(cv_cases_continent, "../AFRICA_COVID19_visualization/clean_data/coronavirus_continent.csv")
 
 
-
-
 ############################################################################################################################################                 
 ############################################################################################################################################                 
 
@@ -247,12 +292,12 @@ ui2 <-
   navbarPage(inverse=T,
             "COVID-19",
              tabPanel("AFRICA",
-              fluidPage(HTML('<meta name="viewport" content="width=1024">'),
+              fluidPage(#HTML('<meta name="viewport" content="width=1024">'),
                fluidRow(
                  # tags$head(
                  #          tags$style(".leaflet-container { background: #ddd; }")
                  #        ),
-                 column(4, 
+                 column(5, 
                   "",
               
                   radioButtons(inputId = "language1", 
@@ -266,27 +311,46 @@ ui2 <-
                  
                    h4(textOutput("reactive_death_count"), align = "right"),
                   
-                  dataTableOutput("Africa")
+                  h4(textOutput("reactive_recovered_count"), align = "right"),
                   
-                  ),
+                  dataTableOutput("Africa"),
+                  
+                  span(textOutput("uicmt14"), style="color:red"),
+                  
+                  uiOutput("uicmt15"),
+                  
+                  a("christian.dide-agossou@cuanschutz.edu", href="mailto:christian.dide-agossou@cuanschutz.edu")),
                  
-                  column(4,
+                 br(),
+                 
+                  column(3,
                   "",
                   uiOutput("uiburden1"),
                   
                   #box(leafletOutput("map", height=675, width = 500))
-                  leafletOutput("map", height=600, width = 600)
+                  leafletOutput("map", height=300, width = 300)
                   )
                  ,
                   
-                  
-                  column(4, offset = 0,
+                 br(),
+              
+                  column(3, offset = 0,
                          "",
                          fluidRow( 
                            plotOutput("cumulative", height = "100%"),
                            plotOutput("consecutive", height = "100%"))
                   )
-                 )
+                 ),
+               
+               # fluidRow(
+               #   column(5, offset = 0,
+               #          "",
+               #            uiOutput("uicmt14"),
+               #            uiOutput("uicmt15"),
+               #            
+               #            a("christian.dide-agossou@cuanschutz.edu", href="mailto:christian.dide-agossou@cuanschutz.edu")
+               #   )
+               # )
                )
                     #  )
              ),
@@ -323,7 +387,7 @@ ui2 <-
                                       
                         hr(),
                        
-                         a(strong("Code"), href="https://github.com/ddkunda/AFRICA-COVID19-visualization"),
+                         a(strong("Code"), href="#https://github.com/ddkunda/AFRICA-COVID19-visualization"),
                         
                         br(),
                         hr(),
@@ -336,17 +400,16 @@ ui2 <-
                           br(),
                           href="mailto:christian.dide-agossou@cuanschutz.edu")
                         
-                 ),
-                 
-                 
-                 column(4, offset = 1,
-                        uiOutput("uicmt86"),
-                        uiOutput("uicmt87"),
-                        uiOutput("uicmt88"),
-                        uiOutput("uimsg81"),
-                        uiOutput("uicmt89")
-                        
                  )
+                 # ,
+                 # column(4, offset = 1,
+                 #        uiOutput("uicmt86"),
+                 #        uiOutput("uicmt87"),
+                 #        uiOutput("uicmt88"),
+                 #        uiOutput("uimsg81"),
+                 #        uiOutput("uicmt89")
+                 #        
+                 # )
                )
              )
              
@@ -376,14 +439,14 @@ server2 <- function(input, output){
   output$uiburden1 <- renderUI({
     radioButtons(inputId =  "burden1",
                 label = tr1("Choose a burden measure:"),
-                choices = tr1(c("Cases", "Deaths")),
+                choices = tr1(c("Cases", "Deaths", "Recovered")),
                 inline = TRUE,
                 selected  = tr1("Cases"))
   })
   
 
   reactive_df = reactive({
-    CASES_DEATHS
+    CASES_DEATHS_RECOVERED3
   })
   
   
@@ -395,35 +458,34 @@ server2 <- function(input, output){
     paste0(prettyNum(sum(reactive_df()$Deaths), big.mark=","), tr1(" total deaths"))
   })
   
+  output$reactive_recovered_count <- renderText({
+    paste0(prettyNum(sum(reactive_df()$Recovered), big.mark=","), tr1(" total recovered"))
+  })
+  
+
+  reactive_df1 = reactive({
+    
+    CASES_DEATHS_RECOVERED3 <- CASES_DEATHS_RECOVERED3[, c(tr1("Country"), tr1("Cases"), tr1("Deaths"), tr1("Recovered"))]
+    CASES_DEATHS_RECOVERED3 <- CASES_DEATHS_RECOVERED3[order(CASES_DEATHS_RECOVERED3[,1]), ]
+  })
   
   output$Africa <- renderDataTable({
-    
-    #df <- as.data.frame(CASES_DEATHS)
-    #df <- as.data.frame(CASES_DEATHS[order(CASES_DEATHS$Cases, decreasing = TRUE), ])
-    df <- as.data.frame(CASES_DEATHS[order(CASES_DEATHS$Country), ])
-    
-    rownames(df) <- c()
-    
-    df <- df[, c(tr1("Country"), tr1("Cases"), tr1("Deaths"))]
-    df <- df[order(df[,1]), ]
-    
-    df
-    
+   datatable(reactive_df1(), rownames = FALSE)
     })
   
   
   output$map <- renderLeaflet({
     
-    
+  
     req(input$burden1)
-    req(CASES_DEATHS)
+    req(CASES_DEATHS_RECOVERED3)
+   
     
-    
-    df1 <- CASES_DEATHS
+    df1 <- CASES_DEATHS_RECOVERED3
     
     if(input$burden1 %in% paste(tr1("Cases"))){
       leaflet(df1)  %>%
-        setView(lng = 25, lat = 0, zoom = 3)%>%
+        setView(lng = 25, lat = 0, zoom = 2)%>%
         addCircleMarkers(df1,
                          lng = ~Long,
                          lat = ~Lat,
@@ -442,7 +504,7 @@ server2 <- function(input, output){
     
     else if(input$burden1 %in% paste(tr1("Deaths"))){
       leaflet(df1)  %>%
-        setView(lng = 25, lat = 0, zoom = 3)%>%
+        setView(lng = 15, lat = 0, zoom = 2.5)%>%
         addCircleMarkers(df1,
                          lng = ~Long,
                          lat = ~Lat,
@@ -454,8 +516,27 @@ server2 <- function(input, output){
                          label = paste(tr1(paste(df1$Country)), "(", input$burden1, ")", ":", df1[, input$burden1]))%>%
         addProviderTiles(providers$CartoDB.DarkMatter)
                          }
-    })
-  
+   
+    
+  else if(input$burden1 %in% paste(tr1("Recovered"))){
+    leaflet(df1)  %>%
+      setView(lng = 15, lat = 0, zoom = 2.5)%>%
+      addCircleMarkers(df1,
+                       lng = ~Long,
+                       lat = ~Lat,
+                       radius = df1[, input$burden1]*0.2,
+                       weight = 1,
+                       opacity = 4,
+                       fill = TRUE,
+                       col="red",
+                       label = paste(tr1(paste(df1$Country)), "(", input$burden1, ")", ":", df1[, input$burden1]))%>%
+      addProviderTiles(providers$CartoDB.DarkMatter)
+  }
+})
+
+
+
+
   
   output$cumulative <- renderPlot({
     
@@ -483,7 +564,8 @@ server2 <- function(input, output){
   #   theme(plot.margin = margin(19,50, 50,19))
 
     }
-   , height = 300, width = 450
+  #, height = 300, width = 400
+  , height = 350, width = 325
 )
   
 output$consecutive <- renderPlot({
@@ -508,10 +590,21 @@ output$consecutive <- renderPlot({
     #   theme(plot.margin = margin(19,50, 50,19))
     
   }
-  , height = 365, width = 450
+  #, height = 365, width = 450
+  , height = 350, width = 325
   )
   
- 
+# output$uicmt14 <- renderUI({
+#   helpText(tr1("Any questions or comments can be sent to:"))
+# })
+
+
+output$uicmt14 <- renderText({tr1("Any questions or comments can be sent to:")})
+
+
+output$uicmt15 <- renderUI({
+  helpText(strong(tr1("Christian Dide-Agossou, MS, BS. (PhD Candidate in Epidemiology)")))
+})
 
 
 
@@ -546,33 +639,33 @@ output$consecutive <- renderPlot({
     helpText(strong(tr2("Christian Dide-Agossou, MS, BS. (PhD Candidate in Epidemiology)")))
   })
   
-  output$uicmt86 <- renderUI({
-    textInput("name", 
-              tr2("Name:"),
-              value="")
-  })
-  
-  output$uicmt87 <- renderUI({
-    textInput("from", 
-              tr2("From:"), 
-              value="xxx@gmail.com")
-  })
-  
-  output$uicmt88 <- renderUI({
-    textInput("to", 
-              tr2("To:"), 
-              value="christian.dide-agossou@cuanschutz.edu")
-  })
-  
-  output$uimsg81 <- renderUI({
-    textAreaInput("mgs", tr2("Message"), value = "", width = '100%', rows = 5, resize = "both")
-  })
-  
-  
-  output$uicmt89 <- renderUI({
-    actionButton("send", 
-                 tr2("Submit"))
-  })
+  # output$uicmt86 <- renderUI({
+  #   textInput("name", 
+  #             tr2("Name:"),
+  #             value="")
+  # })
+  # 
+  # output$uicmt87 <- renderUI({
+  #   textInput("from", 
+  #             tr2("From:"), 
+  #             value="xxx@gmail.com")
+  # })
+  # 
+  # output$uicmt88 <- renderUI({
+  #   textInput("to", 
+  #             tr2("To:"), 
+  #             value="christian.dide-agossou@cuanschutz.edu")
+  # })
+  # 
+  # output$uimsg81 <- renderUI({
+  #   textAreaInput("mgs", tr2("Message"), value = "", width = '100%', rows = 5, resize = "both")
+  # })
+  # 
+  # 
+  # output$uicmt89 <- renderUI({
+  #   actionButton("send", 
+  #                tr2("Submit"))
+  # })
   
   
   ## MAINPANEL for TAB8

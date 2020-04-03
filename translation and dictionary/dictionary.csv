@@ -54,6 +54,7 @@ El Salvador,El Salvador,El Salvador,El Salvador
 Equatorial Guinea,Equatorial Guinea,Guinée Équatoriale,Guinea Ecuatorial
 Eritrea,Eritrea,Érythrée,Eritrea
 Estonia,Estonia,Estonie,Estonia
+Eswatini,Eswatini,Swaziland,Suazilandia
 Ethiopia,Ethiopia,Éthiopie,Etiopía
 Fiji,Fiji,Fidji,Fiji
 Finland,Finland,Finlande,Finlandia
@@ -155,7 +156,6 @@ Spain,Spain,Espagne,España
 Sri Lanka,Sri Lanka,Sri Lanka,Sri Lanka
 Sudan,Sudan,Soudan,Sudán
 Suriname,Suriname,Suriname,Surinam
-Swaziland,Swaziland,Swaziland,Suazilandia
 Sweden,Sweden,Suède,Suecia
 Switzerland,Switzerland,Suisse,Suiza
 Syrian Arab Republic,Syrian Arab Republic,République arabe syrienne,República Árabe Siria
@@ -313,3 +313,5 @@ Choose a language:,Choose a language:,Choisissez une langue:,
 Code adapted from the following sources:,Code adapted from the following sources:,Code adapté des sources suivantes:,
 Adapted from timeline data published by: ,Adapted from timeline data published by: ,Adapté des données de chronologie publiées par:,
 "This Shiny App provides a quick look at the AFRICA COVID-19 data, including total and country-level number of cases and deaths.","This Shiny App provides a quick look at the AFRICA COVID-19 data, including total and country-level number of cases and deaths.","Cette application fournit un aperçu rapide des données du COVID-19 en AFRIQUE, y compris le nombre de cas et de décès sur le continent et dans chaque pays.",
+ total recovered, total recovered, rétablis au total,
+Recovered,Recovered,Rétablis,
