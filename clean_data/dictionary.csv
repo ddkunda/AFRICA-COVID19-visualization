@@ -37,7 +37,7 @@ Chile,Chile,Chili,Chile
 China,China,Chine,China
 Colombia,Colombia,Colombie,Colombia
 Comoros,Comoros,Comores,Comoras
-Congo,Congo,Congo,Congo
+Republic of the Congo,Republic of the Congo,Congo,Congo
 Costa Rica,Costa Rica,Costa Rica,Costa Rica
 Croatia,Croatia,Croatie,Croacia
 Cuba,Cuba,Cuba,Cuba
@@ -183,7 +183,9 @@ Viet Nam,Viet Nam,Viet Nam,Vietnam
 Yemen,Yemen,Yémen,Yemen
 Zambia,Zambia,Zambie,Zambia
 Zimbabwe,Zimbabwe,Zimbabwe,Zimbabwe
+per 1 million population,per 1 million population,pour 1 million habitants,
 "per 100,000 population (hover mouse pointer over dots to reveal statistics)","per 100,000 population (hover mouse pointer over dots to reveal statistics)",pour 100 000 habitants (survolez les points avec la souris pour afficher les statistiques),por 100.000 habitantes (pasen el puntero del ratón sobre los puntos para revelar estadísticas)
+"expressed per 1,000,000 population","expressed per 1,000,000 population",exprimés pour 1 000 000 d'habitants,
 Disability-Adjusted Life Year (DALY) is the summary measure that best give an indication of overall burden of disease.,Disability-Adjusted Life Year (DALY) is the summary measure that best give an indication of overall burden of disease.,L'Année de Vie Ajustée sur l'Incapacité (AVAI) est la mesure synthétique qui donne le mieux une indication du fardeau global de la maladie.,El Año de Vida Ajustado por Discapacidad (AVAD) es la medida resumida que mejor da una indicación de la carga general de la enfermedad.
 One DALY can be thought of as one lost year of healthy life.,One DALY can be thought of as one lost year of healthy life.,Une AVAI peut être considérée comme une année perdue de vie saine.,Un AVAD puede considerarse como un año perdido de vida saludable.
 YLL,YLL,APVP,AVP
@@ -213,7 +215,7 @@ Leading causes of burden,Leading causes of burden,Causes principales de fardeau,
 References:,References:,Références:,Referencias:
 Please visit the WHO website for more information on the data.,Please visit the WHO website for more information on the data.,Veuillez visiter le site de l'OMS pour plus d'informations sur les données.,Visiten la página web de la OMS para obtener más información sobre los datos.
 Any questions or comments can be sent to:,Any questions or comments can be sent to:,Toutes questions ou commentaires peuvent être envoyés à:,Cualquiera pregunta o comentario puede ser enviado a:
-"Christian Dide-Agossou, MS, BS. (PhD Candidate in Epidemiology)","Christian Dide-Agossou, MS, BS. (PhD Candidate in Epidemiology)","Christian Dide-Agossou, MS, BS. (Candidat au PhD en Épidémiologie)","Christian Dide-Agossou, MS, BS. (Candidato a Doctor en Epidemiología)"
+"Christian Dide-Agossou, MS, (PhD Candidate in Epidemiology)","Christian Dide-Agossou, MS, (PhD Candidate in Epidemiology)","Christian Dide-Agossou, MS, (Candidat au PhD en Épidémiologie)","Christian Dide-Agossou, MS, (Candidato a Doctor en Epidemiología)"
 Name:,Name:,Nom:,Nombre:
 From:,From:,De:,De:
 To:,To:,À:,A:
@@ -326,3 +328,12 @@ total deaths,total deaths,total des décès,
 count,count,nombre de cas,
 new cases,new cases,nouveaux cas,
 Any questions can be sent to:,Any questions can be sent to:,Toutes questions peuvent être envoyées à:,
+Case.Rate,Case.Rate,Tx.Cas,
+Death.Rate,Death.Rate,Tx.Mortalité,
+Pop.,Pop.,Pop.,
+TotalCases,TotalCases,CasTotal,
+TotalDeaths,TotalDeaths,DécèsTotal,
+TotalRecovered,TotalRecovered,RétablisTotal,
+"Case and death rates are per 1,000,000 population. Click on the arrows to order the columns.","Case and death rates are per 1,000,000 population. Click on the arrows to order the columns.",Les taux de cas et de décès sont pour 1 000 000 d'habitants. Cliquez sur les flèches pour ordonner les colonnes.,
+Country data,Country data,Données des pays,
+"The case and death rates are per 1,000,000 people. The countries with the highest number of cases and deaths do not necessarily have the highest case and death rates when considering the size of their populations. Click on the arrows to order the columns.","The case and death rates are per 1,000,000 people. The countries with the highest number of cases and deaths do not necessarily have the highest case and death rates when considering the size of their populations. Click on the arrows to order the columns.",Les taux de cas et de décès sont pour 1 000 000 d'habitants. Les pays ayant le plus grand nombre de cas et de décès n'ont pas nécessairement les taux de cas et de décès les plus élevés lorsque l'on tient compte de la taille de leur population. Cliquez sur les flèches pour ordonner les colonnes.,

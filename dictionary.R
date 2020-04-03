@@ -26,13 +26,11 @@ library(httr)
 ############################################################################################################################################                 
 
 ## import translation bin
-translationContent <- read.delim("../AFRICA_COVID19_visualization/translation and dictionary/dictionary.csv", header = TRUE, sep = ",", as.is = TRUE) 
+translationContent <- read.delim("../AFRICA_COVID19_visualization/dictionary.csv", header = TRUE, sep = ",", as.is = TRUE) 
 translation <- dlply(translationContent ,.(key), function(s) key = as.list(s))
-save(translation, file = "../AFRICA_COVID19_visualization/translation and dictionary/translation.bin")
-load("../AFRICA_COVID19_visualization/translation and dictionary/translation.bin") 
+save(translation, file = "../AFRICA_COVID19_visualization/translation.bin")
+load("../AFRICA_COVID19_visualization/translation.bin") 
 
-## import country and DiseaseGroup translation
-country_translation <- read.csv("../AFRICA_COVID19_visualization/translation and dictionary/country_translation.csv", header = TRUE)
 
 
 
