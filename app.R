@@ -543,7 +543,7 @@ output$consecutive <- renderPlot({
   
   
   output$uicmt85 <- renderUI({
-    helpText(strong(tr2("Christian Dide-Agossou, MS, BS. (PhD Candidate)")))
+    helpText(strong(tr2("Christian Dide-Agossou, MS, BS. (PhD Candidate in Epidemiology)")))
   })
   
   output$uicmt86 <- renderUI({

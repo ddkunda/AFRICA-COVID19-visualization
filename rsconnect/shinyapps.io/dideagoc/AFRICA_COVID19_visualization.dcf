@@ -5,8 +5,8 @@ account: dideagoc
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 2034217
-bundleId: 2958335
+bundleId: 2958458
 url: https://dideagoc.shinyapps.io/AFRICA_COVID19_visualization/
-when: 1585819490.12059
+when: 1585821654.42702
 asMultiple: FALSE
 asStatic: FALSE
