@@ -13,7 +13,7 @@ library(knitr)
 library(sendmailR)
 library(shinyAce)
 library(mailR)
-library(googlesheets)
+library(googlesheets4)
 library(DT)
 library(RCurl)
 library(curl)
@@ -26,10 +26,10 @@ library(httr)
 ############################################################################################################################################                 
 
 ## import translation bin
-translationContent <- read.delim("../AFRICA_COVID19_visualization/dictionary.csv", header = TRUE, sep = ",", as.is = TRUE) 
+translationContent <- read.delim("dictionary.csv", header = TRUE, sep = ",", as.is = TRUE) 
 translation <- dlply(translationContent ,.(key), function(s) key = as.list(s))
-save(translation, file = "../AFRICA_COVID19_visualization/translation.bin")
-load("../AFRICA_COVID19_visualization/translation.bin") 
+save(translation, file = "translation.bin")
+load("translation.bin") 
 
 
 

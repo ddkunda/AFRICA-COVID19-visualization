@@ -1,4 +1,3 @@
-
 library(rsconnect)
 library(dplyr)
 library(ggplot2)
@@ -30,15 +29,15 @@ zstringsAsFactors = FALSE
 ## Part. 1 load data
 ######################################
 
-source("../AFRICA_COVID19_visualization/dataset.R")
-source("../AFRICA_COVID19_visualization/dictionary.R")
+source("dataset.R")
+source("dictionary.R")
 
 ## load AfricaCDC data
-load("../AFRICA_COVID19_visualization/CASES_DEATHS_v3.RData")
+load("CASES_DEATHS_v3.RData")
 
 ## import country and DiseaseGroup translation
-load("../AFRICA_COVID19_visualization/translation.bin") 
-country_translation <- read.csv("../AFRICA_COVID19_visualization/country_translation.csv", header = TRUE)
+load("translation.bin") 
+country_translation <- read.csv("country_translation.csv", header = TRUE)
 
 ### make summary table for region and calculate case and death rates
 CASES_DEATHS_RECOVERED4 <- CASES_DEATHS_RECOVERED3[, c("Region","Total.Cases", "Total.Deaths", "Pop.")]
@@ -652,15 +651,15 @@ shinyApp(ui = ui, server = server)
 # ######################################################################################################################################################################################                
 # ######################################################################################################################################################################################                
 # 
-# source("../AFRICA_COVID19_visualization/dataset.R")
-# source("../AFRICA_COVID19_visualization/dictionary.R")
+# source("dataset.R")
+# source("dictionary.R")
 # 
 # ## load AfricaCDC data
-# load("../AFRICA_COVID19_visualization/CASES_DEATHS_v3.RData")
+# load("CASES_DEATHS_v3.RData")
 # 
 # ## import country and DiseaseGroup translation
-# load("../AFRICA_COVID19_visualization/translation.bin") 
-# country_translation <- read.csv("../AFRICA_COVID19_visualization/country_translation.csv", header = TRUE)
+# load("translation.bin") 
+# country_translation <- read.csv("country_translation.csv", header = TRUE)
 # 
 # 
 # ### make summary table for region and calculate case and death rates
@@ -696,7 +695,7 @@ shinyApp(ui = ui, server = server)
 # # ##get your token to access google drive
 # # shiny_token2 <- gs_auth(new_user = TRUE)
 # # saveRDS(shiny_token2, "shiny_app_token.rds")
-# # #gs_auth(token = "../AFRICA_COVID19_visualization/shiny_app_token.rds") # from .rds file
+# # #gs_auth(token = "shiny_app_token.rds") # from .rds file
 # 
 # 
 # #set up data sheet in google drive
